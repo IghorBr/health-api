@@ -28,6 +28,18 @@ public class Historico extends BaseDomain {
     private Double peso;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    public Historico(String observacoes, Integer pressaoSistolica, Integer pressaoDiastolica, Integer bpm, Double glicose, Double altura, Double peso, Usuario usuario) {
+        this.observacoes = observacoes;
+        this.pressaoSistolica = pressaoSistolica;
+        this.pressaoDiastolica = pressaoDiastolica;
+        this.bpm = bpm;
+        this.glicose = glicose;
+        this.altura = altura;
+        this.peso = peso;
+        this.usuario = usuario;
+        usuario.addHistorico(this);
+    }
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -41,4 +42,17 @@ public class Usuario extends BaseDomain {
     @OneToMany(mappedBy = "usuario")
     private List<Historico> historicos = new ArrayList<>();
 
+    public boolean addHistorico(Historico... historicos) {
+        return this.historicos.addAll(Arrays.asList(historicos));
+    }
+
+    public Usuario(String nome, String nomeDoMeio, String ultimoNome, String email, String senha, LocalDate dataNascimento, Role role) {
+        this.nome = nome;
+        this.nomeDoMeio = nomeDoMeio;
+        this.ultimoNome = ultimoNome;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = dataNascimento;
+        this.role = role;
+    }
 }
