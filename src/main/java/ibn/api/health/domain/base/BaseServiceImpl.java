@@ -1,5 +1,6 @@
 package ibn.api.health.domain.base;
 
+import ibn.api.health.core.security.HealthSecurity;
 import ibn.api.health.domain.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,12 @@ public abstract class BaseServiceImpl<T extends BaseDomain> implements BaseServi
 
     private final BaseRepository<T> baseRepository;
     private final Class<T> entity;
+    private final HealthSecurity security;
 
-    protected BaseServiceImpl(BaseRepository<T> baseRepository, Class<T> entity) {
+    protected BaseServiceImpl(BaseRepository<T> baseRepository, Class<T> entity, HealthSecurity security) {
         this.baseRepository = baseRepository;
         this.entity = entity;
+        this.security = security;
     }
 
     @Override

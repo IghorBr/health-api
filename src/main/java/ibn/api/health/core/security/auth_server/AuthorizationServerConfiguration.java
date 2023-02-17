@@ -104,26 +104,26 @@ public class AuthorizationServerConfiguration {
         return new ImmutableJWKSet<>(new JWKSet(rsaKey));
     }
 
-//    @Bean
-//    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(UsuarioRepository usuarioRepository) {
-//        return context -> {
-//            Authentication authentication = context.getPrincipal();
-//            if (authentication.getPrincipal() instanceof User) {
-//                User user = (User) authentication.getPrincipal();
-//
-//                Usuario usuario = usuarioRepository.findByEmail(user.getUsername()).orElseThrow();
-//
-//                Set<String> authorities = new HashSet<>();
-//                for (GrantedAuthority authority : user.getAuthorities()) {
-//                    authorities.add(authority.getAuthority());
-//                }
-//
-//                context.getClaims().claim("usuario_id", usuario.getId().toString());
-//                context.getClaims().claim("role", usuario.getRole().getDescricao());
-//                context.getClaims().claim("code", usuario.getCode());
-//                context.getClaims().claim("authorities", authorities);
-//            }
-//        };
-//    }
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer(UsuarioRepository usuarioRepository) {
+        return context -> {
+            Authentication authentication = context.getPrincipal();
+            if (authentication.getPrincipal() instanceof User) {
+                User user = (User) authentication.getPrincipal();
+
+                Usuario usuario = usuarioRepository.findByEmail(user.getUsername()).orElseThrow();
+
+                Set<String> authorities = new HashSet<>();
+                for (GrantedAuthority authority : user.getAuthorities()) {
+                    authorities.add(authority.getAuthority());
+                }
+
+                context.getClaims().claim("usuario_id", usuario.getId().toString());
+                context.getClaims().claim("role", usuario.getRole().getDescricao());
+                context.getClaims().claim("code", usuario.getCode());
+                context.getClaims().claim("authorities", authorities);
+            }
+        };
+    }
 
 }

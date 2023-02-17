@@ -2,6 +2,7 @@ package ibn.api.health.api.controller;
 
 import ibn.api.health.api.mapper.UsuarioMapper;
 import ibn.api.health.api.model.out.UsuarioDTO;
+import ibn.api.health.core.security.HealthSecurity;
 import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final UsuarioMapper usuarioMapper;
+    private final HealthSecurity security;
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> findAll(
