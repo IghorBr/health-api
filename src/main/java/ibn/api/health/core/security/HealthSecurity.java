@@ -6,10 +6,12 @@ import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.repository.UsuarioRepository;
 import ibn.api.health.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @RequiredArgsConstructor
@@ -59,5 +61,10 @@ public class HealthSecurity {
 
     public boolean isGodLike() {
         return hasAuthority("ROLE_GOD_LIKE");
+    }
+
+    public void verifyCode(String code) {
+        if (!isGodLike() || !(StringUtils.hasText(code) && getCode().equals(code)))
+            throw new AccessDeniedException("Acesso Negado");
     }
 }

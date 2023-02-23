@@ -75,10 +75,10 @@ public class AuthorizationServerConfiguration {
                 .tokenSettings(
                         TokenSettings.builder()
                                 .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
-                                .accessTokenTimeToLive(Duration.ofMinutes(30))
+                                .accessTokenTimeToLive(Duration.ofMinutes(60))
                                 .build()
                 )
-                .redirectUri("http://127.0.0.1:8080/authorized")
+                .redirectUri("http://127.0.0.1:4200")
                 .clientSettings(ClientSettings.builder()
                         .requireAuthorizationConsent(false)
                         .build())

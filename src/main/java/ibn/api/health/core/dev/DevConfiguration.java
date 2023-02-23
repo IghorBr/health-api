@@ -23,10 +23,10 @@ public class DevConfiguration {
                 passwordEncoder.encode("123"), LocalDate.of(2000, 5, 20), Role.GOD_LIKE);
 
         Usuario u2 = new Usuario("Ighor Bruno", "Nascimento", "de Brito", "ighor@email.com",
-                passwordEncoder.encode("123"), LocalDate.of(2000, 5, 20), Role.GOD_LIKE);
+                passwordEncoder.encode("123"), LocalDate.of(2000, 5, 20), Role.ADMIN);
 
         Usuario u3 = new Usuario("Ighor Bruno", "Nascimento", "de Brito", "bruno@email.com",
-                passwordEncoder.encode("123"), LocalDate.of(2000, 5, 20), Role.GOD_LIKE);
+                passwordEncoder.encode("123"), LocalDate.of(2000, 5, 20), Role.USER);
 
 
         u1 = usuarioService.save(u1);

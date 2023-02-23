@@ -7,11 +7,10 @@ import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,13 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDTO>> findAll(
             @RequestParam(value = "showHistory", required = false, defaultValue = "false") Boolean showHistory
     ) {
-        List<Usuario> usuarios = usuarioService.findAll();
+        List<Usuario> usuarios = null;
+
+        if (!security.isUser())
+            usuarios = usuarioService.findAll();
+        else
+            usuarios = Arrays.asList(usuarioService.findByCode(security.getCode()));
+
         List<UsuarioDTO> dtos = usuarioMapper.domainListToDTO(usuarios);
 
         if (!showHistory)
@@ -35,4 +40,15 @@ public class UsuarioController {
 
         return ResponseEntity.ok(dtos);
     }
+
+    @GetMapping("/{code}")
+    public ResponseEntity<UsuarioDTO> findByCode(@PathVariable("code") String code) {
+        security.verifyCode(code);
+
+        Usuario usuario = usuarioService.findByCode(code);
+        UsuarioDTO dto = usuarioMapper.domainToDTO(usuario);
+
+        return ResponseEntity.ok(dto);
+    }
+
 }
