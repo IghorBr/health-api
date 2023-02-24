@@ -51,4 +51,14 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/logado")
+    public ResponseEntity<UsuarioDTO> getUsuarioLogado() {
+        String code = security.getCode();
+
+        Usuario usuario = usuarioService.findByCode(code);
+        UsuarioDTO dto = usuarioMapper.domainToDTO(usuario);
+
+        return ResponseEntity.ok(dto);
+    }
+
 }
