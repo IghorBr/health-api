@@ -33,14 +33,14 @@ public class DevConfiguration {
         u2 = usuarioService.save(u2);
         u3 = usuarioService.save(u3);
 
-        Historico h1 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
-        Historico h2 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
-        Historico h3 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
-        Historico h4 = new Historico("Observações 1", 130, 90, 95, 200., 1.83, 77., u2);
-        Historico h5 = new Historico("Obs 2", 120, 80, 75, 143., 1.83, 74., u2);
-        Historico h6 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);
-        Historico h7 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);
-        Historico h8 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);
+        Historico h1 = new Historico("", 120, 80, 55., 14., 1.83, 74.4, u1);
+        Historico h2 = new Historico("", 120, 80, 95., 213., 1.83, 84., u1);
+        Historico h3 = new Historico("", 120, 80, 44., 31., 1.83, 66., u1);
+        Historico h4 = new Historico("Observações 1", 130, 90, 95., 200., 1.83, 77., u2);
+        Historico h5 = new Historico("Obs 2", 120, 80, 75., 143., 1.83, 74., u2);
+        Historico h6 = new Historico("", 120, 80, 75., 143., 1.83, 74., u3);
+        Historico h7 = new Historico("", 120, 80, 75., 143., 1.83, 74., u3);
+        Historico h8 = new Historico("", 120, 80, 75., 143., 1.83, 74., u3);
 
         historicoService.save(h1);
         historicoService.save(h2);

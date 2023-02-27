@@ -18,7 +18,7 @@ public class Historico extends BaseDomain {
     private String observacoes;
     private Integer pressaoSistolica;
     private Integer pressaoDiastolica;
-    private Integer bpm;
+    private Double bpm;
     private Double glicose;
 
     //EM METROS
@@ -31,7 +31,7 @@ public class Historico extends BaseDomain {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    public Historico(String observacoes, Integer pressaoSistolica, Integer pressaoDiastolica, Integer bpm, Double glicose, Double altura, Double peso, Usuario usuario) {
+    public Historico(String observacoes, Integer pressaoSistolica, Integer pressaoDiastolica, Double bpm, Double glicose, Double altura, Double peso, Usuario usuario) {
         this.observacoes = observacoes;
         this.pressaoSistolica = pressaoSistolica;
         this.pressaoDiastolica = pressaoDiastolica;
