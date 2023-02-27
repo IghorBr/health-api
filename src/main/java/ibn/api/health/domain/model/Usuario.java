@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,5 +54,67 @@ public class Usuario extends BaseDomain {
         this.senha = senha;
         this.dataNascimento = dataNascimento;
         this.role = role;
+    }
+
+    private Historico getUltimoHistorico() {
+        OffsetDateTime menor = OffsetDateTime.of(LocalDateTime.of(2000,1, 1, 0, 0), ZoneOffset.UTC);
+        Historico ultimo = null;
+
+        for (Historico h : this.historicos) {
+            if (h.getCreatedAt().compareTo(menor) >= 0) {
+                menor = h.getCreatedAt();
+                ultimo = h;
+            }
+        }
+
+        return ultimo;
+    }
+
+    public Double getAltura() {
+        return getUltimoHistorico().getAltura();
+    }
+
+    public Double getPeso() {
+        return getUltimoHistorico().getPeso();
+    }
+
+    public Double getMediaPressaoDiastolica() {
+        int soma = 0;
+
+        for (Historico h : this.historicos) {
+            soma += h.getPressaoDiastolica();
+        }
+
+        return (double) (soma / this.historicos.size());
+    }
+
+    public Double getMediaPressaoSistolica() {
+        int soma = 0;
+
+        for (Historico h : this.historicos) {
+            soma += h.getPressaoSistolica();
+        }
+
+        return (double) (soma / this.historicos.size());
+    }
+
+    public Double getMediaBpm() {
+        int soma = 0;
+
+        for (Historico h : this.historicos) {
+            soma += h.getBpm();
+        }
+
+        return (double) (soma / this.historicos.size());
+    }
+
+    public Double getMediaGlicose() {
+        int soma = 0;
+
+        for (Historico h : this.historicos) {
+            soma += h.getGlicose();
+        }
+
+        return (double) (soma / this.historicos.size());
     }
 }

@@ -2,6 +2,7 @@ package ibn.api.health.api.controller;
 
 import ibn.api.health.api.mapper.UsuarioMapper;
 import ibn.api.health.api.model.out.UsuarioDTO;
+import ibn.api.health.api.model.out.UsuarioInfoDTO;
 import ibn.api.health.core.security.HealthSecurity;
 import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.service.UsuarioService;
@@ -51,12 +52,12 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/logado")
-    public ResponseEntity<UsuarioDTO> getUsuarioLogado() {
+    @GetMapping("/info")
+    public ResponseEntity<UsuarioInfoDTO> getUsuarioInfo() {
         String code = security.getCode();
 
         Usuario usuario = usuarioService.findByCode(code);
-        UsuarioDTO dto = usuarioMapper.domainToDTO(usuario);
+        UsuarioInfoDTO dto = usuarioMapper.createUsuarioInfo(usuario);
 
         return ResponseEntity.ok(dto);
     }

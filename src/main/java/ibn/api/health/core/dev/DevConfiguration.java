@@ -36,8 +36,8 @@ public class DevConfiguration {
         Historico h1 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
         Historico h2 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
         Historico h3 = new Historico("", 120, 80, 75, 143., 1.83, 74., u1);
-        Historico h4 = new Historico("", 120, 80, 75, 143., 1.83, 74., u2);
-        Historico h5 = new Historico("", 120, 80, 75, 143., 1.83, 74., u2);
+        Historico h4 = new Historico("Observações 1", 130, 90, 95, 200., 1.83, 77., u2);
+        Historico h5 = new Historico("Obs 2", 120, 80, 75, 143., 1.83, 74., u2);
         Historico h6 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);
         Historico h7 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);
         Historico h8 = new Historico("", 120, 80, 75, 143., 1.83, 74., u3);

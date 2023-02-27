@@ -9,6 +9,7 @@ import ibn.api.health.domain.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,23 +24,13 @@ public class HistoricoController {
     private final HistoricoMapper historicoMapper;
     private final HealthSecurity healthSecurity;
 
-//    @GetMapping
-//    public ResponseEntity<List<HistoricoDTO>> getHistoricos() {
-//        String code = healthSecurity.getCode();
-//
-//        List<Historico> historicos = historicoService.findAll(code);
-//        List<HistoricoDTO> dtos = historicoMapper.domainListToDTO(historicos);
-//
-//        return ResponseEntity.ok(dtos);
-//    }
+    @GetMapping("/{code}")
+    public ResponseEntity<HistoricoDTO> findHistoricoByCode(@PathVariable("code") String code) {
+        Historico historico = historicoService.findByCode(code);
+        HistoricoDTO dto = historicoMapper.domainToDTO(historico);
 
-    @GetMapping("/ultimo")
-    public ResponseEntity<HistoricoDTO> getUltimoHistorico() {
-        String code = healthSecurity.getCode();
-
-        Historico ultimoHistorico = historicoService.findUltimoHistorico(code);
-        HistoricoDTO dto = historicoMapper.domainToDTO(ultimoHistorico);
 
         return ResponseEntity.ok(dto);
     }
+
 }
