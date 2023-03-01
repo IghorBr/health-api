@@ -39,7 +39,7 @@ public class HealthSecurity {
 
     public Long getId() {
         Jwt principal = (Jwt) this.getAuthentication().getPrincipal();
-        return principal.getClaim("usuario_id");
+        return Long.parseLong(principal.getClaim("usuario_id"));
     }
 
     public Usuario getUsuarioLogado() {
