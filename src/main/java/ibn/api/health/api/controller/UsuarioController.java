@@ -6,9 +6,13 @@ import ibn.api.health.api.model.out.UsuarioInfoDTO;
 import ibn.api.health.core.security.HealthSecurity;
 import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -17,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "security")
+@Tag(name = "Usuários")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -24,8 +30,10 @@ public class UsuarioController {
     private final HealthSecurity security;
 
     @GetMapping
+    @PreAuthorize("@healthSecurity.isAuthenticated()")
+    @Operation(summary = "Retorna todos os usuários")
     public ResponseEntity<List<UsuarioDTO>> findAll(
-            @RequestParam(value = "showHistory", required = false, defaultValue = "false") Boolean showHistory
+            @Parameter(description = "Valor que define se o histórico será mostrado ou não", example = "true") @RequestParam(value = "showHistory", required = false, defaultValue = "false") Boolean showHistory
     ) {
         List<Usuario> usuarios = null;
 
@@ -43,7 +51,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<UsuarioDTO> findByCode(@PathVariable("code") String code) {
+    @PreAuthorize("@healthSecurity.isAuthenticated()")
+    @Operation(summary = "Retorna um usuário por code")
+    public ResponseEntity<UsuarioDTO> findByCode(@Parameter(description = "Código de um usuário", required = true) @PathVariable("code") String code) {
         security.verifyCode(code);
 
         Usuario usuario = usuarioService.findByCode(code);
@@ -53,6 +63,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/info")
+    @PreAuthorize("@healthSecurity.isAuthenticated()")
+    @Operation(summary = "Retorna informações sobre o usuário logado")
     public ResponseEntity<UsuarioInfoDTO> getUsuarioInfo() {
         String code = security.getCode();
 

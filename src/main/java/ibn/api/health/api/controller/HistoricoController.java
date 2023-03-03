@@ -7,17 +7,20 @@ import ibn.api.health.core.security.HealthSecurity;
 import ibn.api.health.domain.model.Historico;
 import ibn.api.health.domain.model.Usuario;
 import ibn.api.health.domain.service.HistoricoService;
-import ibn.api.health.domain.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/historicos")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "security")
+@Tag(name = "Históricos")
 public class HistoricoController {
 
     private final HistoricoService historicoService;
@@ -25,6 +28,8 @@ public class HistoricoController {
     private final HealthSecurity healthSecurity;
 
     @GetMapping("/{code}")
+    @PreAuthorize("@healthSecurity.isAuthenticated()")
+    @Operation(summary = "Retorna um único histórico por code")
     public ResponseEntity<HistoricoDTO> findHistoricoByCode(@PathVariable("code") String code) {
         Historico historico = historicoService.findByCode(code);
         HistoricoDTO dto = historicoMapper.domainToDTO(historico);
@@ -34,7 +39,11 @@ public class HistoricoController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> novoHistorico(@RequestBody HistoricoInput input) {
+    @PreAuthorize("@healthSecurity.isAuthenticated()")
+    @Operation(summary = "Cria um novo histórico", description = "Cria um novo lançamento de histórico para o usuário logado")
+    public ResponseEntity<Void> novoHistorico(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Representação de um novo histórico", required = true) @RequestBody HistoricoInput input
+    ) {
         Usuario usuarioLogado = healthSecurity.getUsuarioLogado();
 
         Historico historico = historicoMapper.inputToDomain(usuarioLogado, input);

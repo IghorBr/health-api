@@ -67,4 +67,8 @@ public class HealthSecurity {
         if (!isGodLike() || !(StringUtils.hasText(code) && getCode().equals(code)))
             throw new AccessDeniedException("Acesso Negado");
     }
+
+    public boolean isAuthenticated() {
+        return getAuthentication().isAuthenticated();
+    }
 }

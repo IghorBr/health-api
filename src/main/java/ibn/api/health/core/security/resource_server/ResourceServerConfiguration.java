@@ -27,7 +27,9 @@ public class ResourceServerConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(request ->
-                        request.requestMatchers("/oauth2/**").authenticated()
+                        request
+                                .requestMatchers("/swagger-ui/**", "/swagger-ui/oauth2-redirect.html", "/v3/api-docs/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .csrf().disable()
                 .cors()
