@@ -4,15 +4,15 @@ node {
   }
 
   stage("Compilation") {
-    sh "./mvnw clean install -DskipTests"
+    bat "./mvnw clean install -DskipTests"
   }
 
   stage("Tests and Deployment") {
     stage("Runing unit tests") {
-      sh "./mvnw test -Punit"
+      bat "./mvnw test -Punit"
     }
     stage("Deployment") {
-      sh './mvnw spring-boot:run'
+      bat './mvnw spring-boot:run'
     }
   }
 }
