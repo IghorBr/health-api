@@ -12,7 +12,7 @@ node {
       bat "./mvnw test -Punit"
     }
     stage("Deployment") {
-      bat './mvnw spring-boot:run'
+      bat 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
     }
   }
 }
