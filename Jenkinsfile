@@ -12,7 +12,7 @@ node {
       sh "./mvnw test -Punit"
     }
     stage("Deployment") {
-      sh 'mvn spring-boot:run'
+      sh './mvnw spring-boot:run'
     }
   }
 }
